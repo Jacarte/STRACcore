@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import strac.core.data_structures.IArray;
 import strac.core.dto.FileContentDto;
 import strac.core.models.TraceMap;
+import strac.core.stream_providers.CommandStdInputProvider;
 import strac.core.utils.ServiceRegister;
 
 import java.io.*;
@@ -84,15 +85,33 @@ public class TraceHelper {
         LogProvider.LOGGER()
                 .info("Processing " + fileName);
 
+        InputStream str = provider.getStream(fileName);
 
-        long count = countSentences(separator, remove, provider.getStream(fileName), hasNextIterator, sentenceProvider);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        InputStream copy1;
+        InputStream copy2;
+
+        // Cloning input stream
+        try {
+            str.transferTo(baos);
+
+            copy1 = new ByteArrayInputStream(baos.toByteArray());
+            copy2 = new ByteArrayInputStream(baos.toByteArray());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        long count = countSentences(separator, remove, copy1, hasNextIterator, sentenceProvider);
 
 
         IArray<Integer> trace = ServiceRegister.getInstance().getProvider().allocateIntegerArray(null, count,
                 ServiceRegister.getInstance().getProvider().selectMethod(count));
 
 
-        Scanner sc = sentenceProvider.setupScanner(new Scanner(provider.getStream(fileName), "UTF-8"), separator);
+        Scanner sc = sentenceProvider.setupScanner(new Scanner(copy2, "UTF-8"), separator);
 
 
         List<String> sentences = new ArrayList<>();
