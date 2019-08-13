@@ -11,8 +11,11 @@ import java.util.concurrent.TimeUnit;
 
 public class CommandStdInputProvider implements TraceHelper.IStreamProvider {
 
-    private static final int MAX_TIME = 15; // 15 seconds
+    private static int MAX_TIME = 15; // 15 seconds
 
+    public void setMaxTime(int time){
+        MAX_TIME = time;
+    }
 
 
     @Override
