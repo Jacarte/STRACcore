@@ -23,13 +23,15 @@ public class CommandStdInputProvider implements TraceHelper.IStreamProvider {
         try {
             Process p = Runtime.getRuntime().exec(new String[] {"bash", "-c", filename});
 
-            final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
-            executor.schedule(new Runnable() {
-                @Override
-                public void run() {
+            new Thread(() -> {
+                try {
+                    Thread.sleep(MAX_TIME*1000);
                     p.destroy();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            }, MAX_TIME, TimeUnit.SECONDS);
+
+            }).start();
 
             return p.getInputStream();
 
