@@ -1,5 +1,6 @@
 package strac.core.data_structures.buffered;
 
+import org.apache.log4j.Level;
 import strac.core.data_structures.IArray;
 import strac.core.data_structures.IMapAdaptor;
 import org.jetbrains.annotations.NotNull;
@@ -8,6 +9,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public abstract class BufferedCollection<T> implements IArray<T> {
@@ -21,11 +23,11 @@ public abstract class BufferedCollection<T> implements IArray<T> {
 
     long _size;
 
-    int segment_size;
+    long segment_size;
 
     public abstract int dataSize();
 
-    public BufferedCollection(String fileName, long dataSize, int segmentSize) {
+    public BufferedCollection(String fileName, long dataSize, long segmentSize) {
         aFile = null;
         this.filename = fileName;
 
@@ -49,6 +51,13 @@ public abstract class BufferedCollection<T> implements IArray<T> {
             buffSize++;
 
         _buffers = new MappedByteBuffer[buffSize];
+
+        strac.core.LogProvider.info("Buffered collection ", dataSize, " Segment size", segmentSize, " Buffer count ", _buffers.length );
+
+        System.out.print("Buffered collection. Data size ");
+        System.out.print("" + dataSize);
+        System.out.print(" Segment size " + segmentSize);
+        System.out.println(" Number of buffers " + _buffers.length);
 
 
         try {
