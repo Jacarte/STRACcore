@@ -140,7 +140,7 @@ public class TraceHelper {
             }
 
 
-            System.out.println(line);
+            // System.out.println(line);
             if(keepSentences && !line.equals(""))
                 sentences.add(line);
 
