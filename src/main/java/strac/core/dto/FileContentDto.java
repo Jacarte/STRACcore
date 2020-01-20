@@ -6,6 +6,8 @@ public class FileContentDto extends BaseDto {
 
     public List<String> files;
 
+    public List<int[]> pairs;
+
     public String separator;
 
     public String[] clean;
