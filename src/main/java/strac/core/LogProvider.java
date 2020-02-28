@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class LogProvider {
 
 
-    private static Logger _logger;
+    public static Logger _logger;
 
 
     static void setup() throws IOException {
