@@ -1,6 +1,9 @@
 package strac.core;
 
 
+import me.tongfei.progressbar.ProgressBar;
+import me.tongfei.progressbar.ProgressBarBuilder;
+import me.tongfei.progressbar.ProgressBarStyle;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -15,8 +18,17 @@ import java.util.stream.Collectors;
 public class LogProvider {
 
 
+    public interface Callbacker {
+        void doAction(String msg);
+    }
+
+    static Callbacker _callbacker;
+
     public static Logger _logger;
 
+    public static void setCallbacker(Callbacker callbacker){
+        _callbacker = callbacker;
+    }
 
     static void setup() throws IOException {
 
@@ -26,6 +38,7 @@ public class LogProvider {
         PropertyConfigurator.configure(resource);
 
         _logger = Logger.getLogger("tool");
+
     }
 
     static Logger LOGGER(){
@@ -41,14 +54,13 @@ public class LogProvider {
         return _logger;
     }
 
-    public static void progress(Object... msgs){
-        String progress = String.join(" ", Arrays.stream(msgs).map(i -> String.valueOf(i)).collect(Collectors.toList()));
-
-        System.out.print(String.format("\r%s", progress));
-        System.out.flush();
-    }
-
     public static void info(Object ... msgs){
-        LOGGER().log(Level.INFO, String.join(" ", Arrays.stream(msgs).map(i -> String.valueOf(i)).collect(Collectors.toList())));
+        String msg = String.join(" ", Arrays.stream(msgs).map(i -> String.valueOf(i)).collect(Collectors.toList()));
+        LOGGER().log(Level.INFO, msg);
+
+        if(_callbacker != null)
+            _callbacker.doAction(msg);
     }
+
+
 }
