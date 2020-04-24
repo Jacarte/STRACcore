@@ -20,12 +20,9 @@ public class TimeUtils {
     }
 
     public void time(String msg){
-       /* long now = System.nanoTime();
-
-
+        long now = System.nanoTime();
         LogProvider.info(msg,"Took", "" + (now - this.time)/1000000, "ms");
-
-        this.time = now;*/
+        this.time = now;
     }
 
     public void timeMicro(){
