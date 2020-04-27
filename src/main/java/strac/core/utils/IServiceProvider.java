@@ -9,7 +9,7 @@ public interface IServiceProvider {
         EXTERNAL
     }
 
-    IArray<Integer> allocateIntegerArray(String id, long size, ALLOCATION_METHOD method);
+    int[] allocateIntegerArray(String id, long size, ALLOCATION_METHOD method);
 
     IArray<Long> allocateLonArray(String id, long size, ALLOCATION_METHOD method);
 

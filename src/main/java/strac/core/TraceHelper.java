@@ -107,7 +107,7 @@ public class TraceHelper {
         long count = countSentences(separator, remove, copy1, hasNextIterator, sentenceProvider);
 
 
-        IArray<Integer> trace = ServiceRegister.getInstance().getProvider().allocateIntegerArray(null, count,
+        int[] trace = ServiceRegister.getInstance().getProvider().allocateIntegerArray(null, count,
                 ServiceRegister.getInstance().getProvider().selectMethod(count));
 
 
@@ -146,7 +146,7 @@ public class TraceHelper {
 
 
             if(!line.equals(""))
-                trace.set(index++, updateBag(line));
+                trace[(int)index++] = updateBag(line);
 
         }
 

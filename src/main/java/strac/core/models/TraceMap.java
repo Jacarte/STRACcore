@@ -4,7 +4,7 @@ import strac.core.data_structures.IReadArray;
 
 public class TraceMap {
 
-    public IReadArray<Integer> plainTrace;
+    public int[] plainTrace;
 
     public String traceFile;
 
@@ -13,7 +13,7 @@ public class TraceMap {
     public String[] originalSentences;
 
 
-    public TraceMap(IReadArray<Integer> trace, String traceFile,  String[] originalTraces){
+    public TraceMap(int[] trace, String traceFile,  String[] originalTraces){
 
 
         this.plainTrace = trace;
@@ -24,7 +24,7 @@ public class TraceMap {
         this.traceFileName = chunks[chunks.length - 1];
         this.originalSentences = originalTraces;
     }
-    public TraceMap(IReadArray<Integer> trace, String traceFile){
+    public TraceMap(int[] trace, String traceFile){
         this(trace, traceFile, null);
     }
 

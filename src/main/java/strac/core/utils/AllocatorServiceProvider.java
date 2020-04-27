@@ -26,17 +26,8 @@ public class AllocatorServiceProvider implements IServiceProvider {
     }
 
     @Override
-    public IArray<Integer> allocateIntegerArray(String id, long size, ALLOCATION_METHOD method) {
-
-        if(method == ALLOCATION_METHOD.MEMORY){
-            return new InMemoryArray(id, (int)size);
-        }
-
-        IArray<Integer> result = new BufferedCollectionInteger(id==null? getRandomName(): id, size, Integer.MAX_VALUE/2);
-
-        openedArrays.add(result);
-
-        return result;
+    public int[] allocateIntegerArray(String id, long size, ALLOCATION_METHOD method) {
+        return new int[(int)size];
     }
 
     @Override
